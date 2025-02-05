@@ -16,10 +16,10 @@ remove bending from the data.
 pip install .
 
 ## Usage
-Check out examples/run_example.py for a simple demonstration.# surface_enlargement_factor
+Check out examples/run_example.py for a simple demonstration.
 
 
-## Surface Enlargement Factor
+## Surface Enlargement Factor (mathematical framework)
 
 When surface topographies are recorded using confocal Raman microscopy or atomic force microscopy, the resulting data is arranged on a regular grid. A triangular mesh is then constructed over the grid to approximate the true surface area. The ratio between the calculated (true) surface area and the projected geometric area defines the **Surface Enlargement Factor (SEF)**, which quantifies the increase in area due to roughness.
 
