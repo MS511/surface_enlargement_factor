@@ -2,7 +2,7 @@
 
 This Python package provides functionality to read and process surface topography data
 (list or matrix format), compute surface areas (linear or triangular), and optionally
-remove bending from your data.
+remove bending from the data.
 
 ## Key Features
 - Flexible input (list or matrix)
