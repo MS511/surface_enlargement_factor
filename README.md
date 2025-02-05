@@ -39,7 +39,7 @@ Surface topography data is provided as a 2D array of height values z_{i,j} on a 
    (x_i, y_{j+1}, z_{i,j+1}) (top-right).
 
 <img src="/triangular_mesh_with_labels.png" alt="Exemplary mesh built from triangles" width="500"/>
-_Figure: A 4×4 section of the grid as recorded with confocal Raman microscopy. The red lines indicate the first triangle and the yellow lines indicate the second triangle formed within the first grid cell._
+*Figure: A 4×4 section of the grid as recorded with confocal Raman microscopy. The red lines indicate the first triangle and the yellow lines indicate the second triangle formed within the first grid cell.*
 
 For each triangle with vertices A, B, and C, the side lengths are computed as
 
@@ -61,7 +61,7 @@ A_{surface} = sum_{k=1}^{M} (A_{triangle_k}),
 
 while the projected geometric area is
 
-A_{{geometric} = (N_x - 1)(N_y - 1) delta_x delta_y.
+A_{geometric} = (N_x - 1)(N_y - 1) delta_x delta_y.
 
 Finally, the SEF is defined as
 
