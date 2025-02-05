@@ -20,6 +20,28 @@ Check out examples/run_example.py for a simple demonstration.# surface_enlargeme
 
 
 
+<div>
+  <h1>Surface Enlargement Factor Documentation</h1>
+  <p>
+    When surface topographies are recorded, a triangular mesh is constructed over the grid.
+    The following figure illustrates a 4×4 section with the two triangles formed in one grid cell.
+  </p>
+  <img src="thesis/figures/Chapter%203/triangular_mesh_with_labels.png" alt="Triangular Mesh Example">
+  <h2>Mathematical Formulation</h2>
+  <p>
+    The area of a triangle is given by Heron's formula:
+  </p>
+  <p>
+    \( A_{\triangle} = \sqrt{s(s-a)(s-b)(s-c)} \)
+  </p>
+  <p>
+    where \( s = \frac{a+b+c}{2} \).
+  </p>
+  <p>
+    **Note:** The equation above will not render as math on GitHub because JavaScript (e.g., MathJax) is disabled.
+  </p>
+</div>
+
 ## Surface Enlargement Factor
 
 When surface topographies are recorded using confocal Raman microscopy or atomic force microscopy, the resulting data is arranged on a regular grid. A triangular mesh is then constructed over the grid to approximate the true surface area. The ratio between the calculated (true) surface area and the projected geometric area defines the **Surface Enlargement Factor (SEF)**, which quantifies the increase in area due to roughness.
