@@ -4,7 +4,7 @@ from src.writer import Writer
 
 
 def main():
-    filepath = 'sample_list_2.txt'
+    filepath = 'sample_list.txt'
     sef_method = 'triangular'
 
     input_units = {'x': 'µm', 'y': 'µm', 'z': 'µm'}
@@ -16,14 +16,14 @@ def main():
         'delimiter': '\t',
         'header': None,
         'comment': '#',
-        'decimal': ',',
+        'decimal': '.',
         'engine': 'python'
     }
 
     spatial_info = {'width': 886.59,
                     'height': 662.42}
 
-    reader = Reader(file_structure='matrix',
+    reader = Reader(file_structure='auto',  # 'auto' or 'matrix' or 'list'
                     input_units=input_units,
                     convert_units=True,
                     read_options=read_options,
