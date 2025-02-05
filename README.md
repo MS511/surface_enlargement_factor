@@ -16,4 +16,4 @@ remove bending from the data.
 pip install .
 
 ## Usage
-Check out examples/run_example.py for a simple demonstration.
+Check out examples/run_example.py for a simple demonstration.# surface_enlargement_factor
