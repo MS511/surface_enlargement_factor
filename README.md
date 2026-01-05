@@ -1,13 +1,13 @@
 # Surface Enlargement Factor
 
 This Python package provides functionality to read and process surface topography data
-(list or matrix format), compute surface areas (linear or triangular), and optionally
+(list or matrix format), compute surface areas (triangular mesh), and optionally
 remove bending from the data.
 
 ## Key Features
 - Flexible input (list or matrix)
 - Optional unit conversion
-- Multiple surface area methods
+- Triangular-mesh surface area / SEF
 - Bending correction (row-wise)
 - Plotting
 - Result writing to text files
@@ -21,50 +21,39 @@ Check out examples/run_example.py for a simple demonstration.
 
 ## Surface Enlargement Factor (mathematical framework)
 
-When surface topographies are recorded using confocal Raman microscopy or atomic force microscopy, the resulting data is arranged on a regular grid. A triangular mesh is then constructed over the grid to approximate the true surface area. The ratio between the calculated (true) surface area and the projected geometric area defines the **Surface Enlargement Factor (SEF)**, which quantifies the increase in area due to roughness.
+When surface topographies are recorded using confocal Raman microscopy or atomic force microscopy, the resulting data is arranged on a regular grid. A triangular mesh is then constructed over the grid to approximate the true surface area. The ratio between the calculated (true) surface area and the projected geometric area defines the **Surface Enlargement Factor (SEF)**.
 
-Surface topography data is provided as a 2D array of height values z_{i,j} on a grid of coordinates (x_i,y_j) with uniform spacings delta_x and delta_y. For each grid cell defined by points  
-(i,j), (i+1,j), (i,j+1), and (i+1,j+1), two triangles are constructed:
+### Coordinate / grid convention used in this package
 
-1. **First Triangle:**  
-   Formed by the points  
-   (x_i,y_j,z_{i,j}) (top-left),  
-   (x_{i+1},y_j, z_{i+1,j}) (bottom-left), and  
-   (x_{i+1},y_{j+1}, z_{i+1,j+1}) (bottom-right).
+The topography is represented as a 2D array `z[i,j]` with shape `(N_rows, N_cols)`.
 
-2. **Second Triangle:**  
-   Formed by the points  
-   (x_i, y_j, z_{i,j}) (top-left),  
-   (x_{i+1}, y_{j+1}, z_{i+1,j+1}) (bottom-right), and  
-   (x_i, y_{j+1}, z_{i,j+1}) (top-right).
+- **x-axis spans the columns** (`j = 0..N_cols-1`)
+- **y-axis spans the rows** (`i = 0..N_rows-1`)
 
-<img src="/triangular_mesh_with_labels.png" alt="Exemplary mesh built from triangles" width="500"/>
-*Figure: A 4×4 section of the grid as recorded with confocal Raman microscopy. The red lines indicate the first triangle and the yellow lines indicate the second triangle formed within the first grid cell.*
+We interpret `settings['width'] = Lx` and `settings['height'] = Ly` as the **total physical extents from the first to the last grid point**.
+Therefore the grid spacings are
 
-For each triangle with vertices A, B, and C, the side lengths are computed as
+- \(\Delta x = L_x / (N_{cols}-1)\)
+- \(\Delta y = L_y / (N_{rows}-1)\)
 
-a = |B - A|,
-b = |C - B|,
-c = |A - C|.
+The **projected area** is
 
-The semiperimeter s is
+- \(A_{proj} = L_x \cdot L_y\)
 
-s = (a+b+c)/2,
+This makes SEF a pure measure of surface area increase relative to the planar projection.
 
-and the area of the triangle is given by Heron's formula:
+### Triangular surface area
 
-A_{triangle} = sqrt(s(s - a)(s - b)(s - c)).
+For each grid cell defined by the four corner points
+\((i,j), (i+1,j), (i,j+1), (i+1,j+1)\), two triangles are constructed.
+To reduce directional bias, this package computes **both possible diagonals per cell** and averages the resulting cell areas.
 
-The 'true' surface area is obtained by summing the areas of all triangles:
+For a triangle with vertices A, B, and C, the area is computed via the cross product:
 
-A_{surface} = sum_{k=1}^{M} (A_{triangle_k}),
+\(A_{triangle} = \tfrac{1}{2} \lVert (B-A) \times (C-A) \rVert\).
 
-while the projected geometric area is
-
-A_{geometric} = (N_x - 1)(N_y - 1) delta_x delta_y.
+The total surface area is the sum over all cell triangles.
 
 Finally, the SEF is defined as
 
-SEF = A_{surface}/A_{geometric}).
-
-A finer grid (smaller delta_x and delta_y) improves the resolution of the mesh and the accuracy of the SEF, thereby capturing the nuances of surface roughness.
+\(SEF = A_{surface}/A_{proj}\).

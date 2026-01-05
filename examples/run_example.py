@@ -5,6 +5,8 @@ from src.writer import Writer
 
 def main():
     filepath = 'sample_list.txt'
+
+    # only supported method
     sef_method = 'triangular'
 
     input_units = {'x': 'µm', 'y': 'µm', 'z': 'µm'}

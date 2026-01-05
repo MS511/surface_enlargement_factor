@@ -6,3 +6,5 @@ venv/
 
 # Sample output
 examples/output/
+__pycache__/
+*.py[cod]

@@ -141,8 +141,11 @@ class Reader:
                     y_unit = self.input_units.get('y', 'm')
                     dx = self._convert_value(dx, x_unit)
                     dy = self._convert_value(dy, y_unit)
-                width = num_cols * dx
-                height = num_rows * dy
+
+                # Interpret delta_x/delta_y as grid spacing between points.
+                # Total extent is (N-1) * delta.
+                width = (num_cols - 1) * dx if num_cols > 1 else 0.0
+                height = (num_rows - 1) * dy if num_rows > 1 else 0.0
             else:
                 raise ValueError(
                     "[Error] For matrix input, provide either {width, height} or {delta_x, delta_y}."
